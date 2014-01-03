@@ -1,4 +1,5 @@
-define(function() {
+define([],
+function() {
     "use strict";
 
     var WORD_SCOPE = 0,
@@ -19,11 +20,15 @@ define(function() {
      * @param {number} time See definition of 'time' in ROOT/main.js
      */
     var Layer = function (sentence, language, time) {
-        this.sentence = sentence;
-        this.language = language;
-        this.time = time;
+        if (sentence !== undefined) {
+            // true constructor call
 
-        this.sentence_to_words();
+            this.sentence = sentence;
+            this.language = language;
+            this.time = time;
+
+            this.sentence_to_words();
+        }
     };
 
     Layer.prototype.start_layer_pipeline = function () {
@@ -31,6 +36,7 @@ define(function() {
     };
 
     Layer.prototype.sentence_to_words = function () {
+        console.log(this.sentence);
         this.words = (this.sentence
             .replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g, ' ')
             .replace(/\s{2,}/g, ' ')

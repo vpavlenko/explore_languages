@@ -1,15 +1,16 @@
-requirejs(['backends/main', 'layers/layer'],
-    function (layer) {
-        "use strict";
+define(['layers/layer'],
+function (layer) {
+    "use strict";
 
-        var PhoneticTranscriptionLayer = function (sentence, language, time) {
-            layer.Layer.call(this, sentence, language, time);
-            this.
-        }
+    var PhoneticTranscriptionLayer = function (sentence, language, time) {
+        layer.Layer.call(this, sentence, language, time);
+    };
 
-        PhoneticTranscriptionLayer.prototype = new layer.Layer();
+    PhoneticTranscriptionLayer.prototype.name = 'phonetic_transcription';
 
-        return {
+    PhoneticTranscriptionLayer.prototype = new layer.Layer();
 
-        };
-    });
+    return {
+        PhoneticTranscriptionLayer: PhoneticTranscriptionLayer
+    };
+});
