@@ -1,5 +1,5 @@
-define([],
-function() {
+define(["require"],
+function(require) {
     "use strict";
 
     var WORD_SCOPE = 0,
@@ -32,11 +32,18 @@ function() {
     };
 
     Layer.prototype.start_layer_pipeline = function () {
-
+        var _this = this;
+        console.log('started ', this.get_name(), ' on ', this);
+        this.send_request_to_backend(function () {
+            require("layers/main").publish(
+                _this.time,
+                _this.get_name(),
+                _this.json_to_tags(_this.json)
+            );
+        });
     };
 
     Layer.prototype.sentence_to_words = function () {
-        console.log(this.sentence);
         this.words = (this.sentence
             .replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g, ' ')
             .replace(/\s{2,}/g, ' ')
@@ -46,16 +53,15 @@ function() {
     /**
      * Send a request to backend to receive layer data for the source.
      * Source is a word or a sentence (depends on this.scope).
-     *
-     * @return: JSON data with layer info which can be then passed to
-     *     data_to_tags method
+     * Store response in this.json.
      */
-    Layer.prototype.receive_data = function (source) {
-
+    Layer.prototype.send_request_to_backend = function (callback) {
+        this.json = {'data': this.words.join(', ')};
+        callback();
     };
 
-    Layer.prototype.data_to_tags = function (data) {
-
+    Layer.prototype.json_to_tags = function (json) {
+        return $('<span>').text(json.data);
     };
 
     Layer.prototype.source_to_tags = function (source) {
