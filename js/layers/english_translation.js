@@ -1,16 +1,8 @@
-define(['layers/layer'],
-function (layer) {
+define(['backends/main', 'layers/layer'],
+function (backends, layer) {
     "use strict";
 
-    var EnglishTranslationLayer = function (sentence, language, time) {
-        layer.Layer.call(this, sentence, language, time);
-    };
-
-    EnglishTranslationLayer.prototype = new layer.Layer();
-
-    EnglishTranslationLayer.prototype.get_name = function () {
-        return 'english_translation';
-    };
+    var EnglishTranslationLayer = layer.build_layer_subclass('english_translation');
 
     return {
         EnglishTranslationLayer: EnglishTranslationLayer

@@ -2,13 +2,9 @@ define(['layers/layer'],
 function (layer) {
     "use strict";
 
-    var PhoneticTranscriptionLayer = function (sentence, language, time) {
-        layer.Layer.call(this, sentence, language, time);
-    };
+    var PhoneticTranscriptionLayer = layer.build_layer_subclass('phonetic_transcription');
 
-    PhoneticTranscriptionLayer.prototype.name = 'phonetic_transcription';
-
-    PhoneticTranscriptionLayer.prototype = new layer.Layer();
+    // TODO: implement
 
     return {
         PhoneticTranscriptionLayer: PhoneticTranscriptionLayer

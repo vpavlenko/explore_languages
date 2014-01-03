@@ -1,9 +1,9 @@
-define(["require"],
-function(require) {
+define(["require", "backends/main"],
+function(require, backends) {
     "use strict";
 
-    var WORD_SCOPE = 0,
-        SENTENCE_SCOPE = 1;
+    // var WORD_SCOPE = 0,
+    //     SENTENCE_SCOPE = 1;
 
     /**
      * Layer is a base class for concrete layers.  Every concrete layer is
@@ -29,11 +29,13 @@ function(require) {
 
             this.sentence_to_words();
         }
+        // else branch is taken when new Layer() called to fill
+        // the subclass prototype
     };
 
     Layer.prototype.start_layer_pipeline = function () {
         var _this = this;
-        console.log('started ', this.get_name(), ' on ', this);
+
         this.send_request_to_backend(function () {
             require("layers/main").publish(
                 _this.time,
@@ -50,14 +52,14 @@ function(require) {
             .split(' '));
     };
 
-    /**
-     * Send a request to backend to receive layer data for the source.
-     * Source is a word or a sentence (depends on this.scope).
-     * Store response in this.json.
-     */
     Layer.prototype.send_request_to_backend = function (callback) {
-        this.json = {'data': this.words.join(', ')};
-        callback();
+        var _this = this;
+        var backend = backends.find_backend(this.language, this.get_name());
+
+        backend.execute_request(this.sentence, function (json) {
+            _this.json = json;
+            callback();
+        });
     };
 
     Layer.prototype.json_to_tags = function (json) {
@@ -68,10 +70,24 @@ function(require) {
         return this.source_to_tags(this.receive_data(source));
     };
 
+    function build_layer_subclass(layer_name) {
+        var NewLayer = function (sentence, language, time) {
+            Layer.call(this, sentence, language, time);
+        };
+
+        NewLayer.prototype = new Layer();
+
+        NewLayer.prototype.get_name = function () {
+            return layer_name;
+        };
+
+        return NewLayer;
+    }
 
     return {
-        WORD_SCOPE: WORD_SCOPE,
-        SENTENCE_SCOPE: SENTENCE_SCOPE,
-        Layer: Layer
+        // WORD_SCOPE: WORD_SCOPE,
+        // SENTENCE_SCOPE: SENTENCE_SCOPE,
+        Layer: Layer,
+        build_layer_subclass: build_layer_subclass
     };
 });
