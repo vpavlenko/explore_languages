@@ -6,6 +6,16 @@
     width: 40em;
 }
 
+#suggest {
+    color: blue;
+    border-bottom: 1px dotted blue;
+}
+
+#suggest:hover {
+    color: darkblue;
+    border-bottom: 1px dotted darkblue;
+}
+
 body {
     padding: 0.5em 1em;
 }

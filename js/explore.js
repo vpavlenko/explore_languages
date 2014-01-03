@@ -1,5 +1,5 @@
-define(['jquery', 'layers/main', 'backends/main'],
-function ($, layers, backends) {
+define(['jquery', 'layers/main', 'backends/main', 'suggests'],
+function ($, layers, backends, suggests) {
     "use strict";
 
     /**
@@ -44,6 +44,6 @@ function ($, layers, backends) {
         get_time: function () {
             return time;
         },
-        start: function () {}
+        start_explore_pipeline: start_explore_pipeline
     };
 });
