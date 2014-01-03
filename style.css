@@ -1,3 +1,21 @@
 .layer-container {
-    border: 1px solid lightgrey;
+    /*border: 1px solid lightgrey;*/
+}
+
+#sentence-field {
+    width: 40em;
+}
+
+body {
+    padding: 0.5em 1em;
+}
+
+header {
+    padding-bottom: 2em;
+}
+
+footer {
+    position: absolute;
+    bottom: 0.5em;
+    left: 1em;
 }

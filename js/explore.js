@@ -12,23 +12,19 @@ function ($, layers, backends) {
      * @return {string} language code: ISO-639-1, if exists, otherwise
      *     ISO-639-2.
      */
-    function detect_language(sentence) {
-        return 'es';
-        // TODO: implement true language detection.
-        // return backends.detect_language(sentence);
-    }
 
     function start_explore_pipeline() {
         var sentence = $('#sentence-field').val();
         time++;
 
-        var language = detect_language(sentence);
-        var selected_layers = layers.get_selected_layers(language);
+        backends.detect_language(sentence, function (language) {
+            var selected_layers = layers.get_selected_layers(language);
 
-        for (var i in selected_layers) {
-            var LayerClass = selected_layers[i];
-            (new LayerClass(sentence, language, time)).start_layer_pipeline();
-        }
+            for (var i in selected_layers) {
+                var LayerClass = selected_layers[i];
+                (new LayerClass(sentence, language, time)).start_layer_pipeline();
+            }
+        });
     }
 
     $(document).ready(function () {
@@ -36,7 +32,10 @@ function ($, layers, backends) {
         layers.clear_layers();
 
         $('#sentence-field').keyup(function () {
-            console.log($('#sentence-field').val());
+            start_explore_pipeline();
+        });
+
+        $('#go-button').click(function() {
             start_explore_pipeline();
         });
     });
