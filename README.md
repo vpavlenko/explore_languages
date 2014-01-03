@@ -20,5 +20,8 @@ http://api.yandex.ru/translate/
 Unit tests
 ----------
 
-http://code.google.com/p/js-test-driver/wiki/GettingStarted
+https://github.com/theintern/intern
 
+Run tests:
+
+    node ~/node_modules/intern/client.js config=tests/intern
