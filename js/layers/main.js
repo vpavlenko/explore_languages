@@ -1,9 +1,9 @@
 define(['require', 'jquery', 'backends/main',
     'layers/phonetic_transcription',
-    'layers/english_translation'],
+    'layers/sentence_translation'],
 function (require, $, backends,
     phonetic_transcription,
-    english_translation) {
+    sentence_translation) {
     "use strict";
 
     var WORD_SCOPE = 0,
@@ -11,7 +11,7 @@ function (require, $, backends,
 
     var AVAILABLE_LAYERS = [
         // phonetic_transcription.PhoneticTranscriptionLayer,
-        english_translation.EnglishTranslationLayer
+        sentence_translation.SentenceTranslationLayer
     ];
 
     var SELECTED_LAYERS = AVAILABLE_LAYERS;

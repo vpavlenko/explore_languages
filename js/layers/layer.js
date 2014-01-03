@@ -56,7 +56,7 @@ function(require, backends) {
         var _this = this;
         var backend = backends.find_backend(this.language, this.get_name());
 
-        backend.execute_request(this.sentence, function (json) {
+        backend(this.sentence, this.language, function (json) {
             _this.json = json;
             callback();
         });
