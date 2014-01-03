@@ -1,5 +1,5 @@
 requirejs(['jquery', 'layers/main', 'backends/main'],
-    function($, layers, backends) {
+    function ($, layers, backends) {
         "use strict";
 
         /**
@@ -24,10 +24,17 @@ requirejs(['jquery', 'layers/main', 'backends/main'],
 
             var language = detect_language(sentence);
             var selected_layers = layers.get_selected_layers(language);
+
+            for (var i in selected_layers) {
+                var LayerClass = selected_layers[i];
+                (new LayerClass(sentence, language, time)).start_layer_pipeline();
+            }
         }
 
-        $(document).ready(function() {
-            $('sentence-field').keypress(function() {
+        $(document).ready(function () {
+            layers.set_layers_container($('#layers'));
+
+            $('sentence-field').keypress(function () {
                 start_explore_pipeline();
             });
         });
